@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SAKSHI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bg-red) 0%, var(--white) 100%);
+        }
+        
+        .login-card {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            max-width: 450px;
+            width: 100%;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-header h1 {
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-icon">
+                    {% if user_type == 'citizen' %}
+                        👤
+                    {% elif user_type == 'doctor' %}
+                        ⚕️
+                    {% else %}
+                        🏥
+                    {% endif %}
+                </div>
+                <h1>
+                    {% if user_type == 'citizen' %}
+                        Citizen Login
+                    {% elif user_type == 'doctor' %}
+                        Doctor Login
+                    {% else %}
+                        Admin Login
+                    {% endif %}
+                </h1>
+                <p style="color: var(--gray-600);">Welcome back to SAKSHI</p>
+            </div>
+
+            <form action="/authenticate" method="POST">
+                <input type="hidden" name="user_type" value="{{ user_type }}">
+                
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" name="email" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" name="password" required placeholder="Enter your password">
+                </div>
+
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" name="remember">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" style="color: var(--primary-red); text-decoration: none;">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    Sign In
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--gray-200);">
+                <p style="color: var(--gray-600);">
+                    Don't have an account? 
+                    <a href="#" style="color: var(--primary-red); text-decoration: none; font-weight: 600;">Sign Up</a>
+                </p>
+                <p style="margin-top: 1rem;">
+                    <a href="/" style="color: var(--gray-600); text-decoration: none;">← Back to Home</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
