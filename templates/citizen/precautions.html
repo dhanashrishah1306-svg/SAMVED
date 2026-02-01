@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Precautions - SAKSHI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏥</span> SAKSHI
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/citizen/dashboard">Dashboard</a></li>
+                    <li><a href="/citizen/book-appointment">Book Appointment</a></li>
+                    <li><a href="/citizen/precautions">Precautions</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">Health Precautions & Guidelines</h2>
+            <p style="color: var(--gray-600); margin-bottom: 2rem;">
+                Stay informed about the latest health precautions and guidelines to maintain your well-being.
+            </p>
+
+            <div class="alert alert-info">
+                <strong>📢 Important Notice:</strong> These precautions are updated regularly based on current health advisories.
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">🦠 General Health Precautions</h3>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div style="padding: 1.5rem; background: var(--gray-50); border-left: 4px solid var(--primary-red); border-radius: 8px;">
+                    <h4 style="color: var(--primary-red); margin-bottom: 0.5rem;">Hand Hygiene</h4>
+                    <p style="color: var(--gray-600);">
+                        Wash your hands frequently with soap and water for at least 20 seconds, especially after being in public places, 
+                        before eating, and after coughing or sneezing.
+                    </p>
+                    <ul style="margin-top: 0.5rem; color: var(--gray-600); line-height: 1.8;">
+                        <li>Use hand sanitizer with at least 60% alcohol when soap isn't available</li>
+                        <li>Avoid touching your face, especially eyes, nose, and mouth</li>
+                        <li>Cover coughs and sneezes with tissues or your elbow</li>
+                    </ul>
+                </div>
+
+                <div style="padding: 1.5rem; background: var(--gray-50); border-left: 4px solid var(--primary-red); border-radius: 8px;">
+                    <h4 style="color: var(--primary-red); margin-bottom: 0.5rem;">Healthy Lifestyle</h4>
+                    <p style="color: var(--gray-600);">
+                        Maintain a healthy lifestyle to strengthen your immune system and overall health.
+                    </p>
+                    <ul style="margin-top: 0.5rem; color: var(--gray-600); line-height: 1.8;">
+                        <li>Get 7-9 hours of quality sleep each night</li>
+                        <li>Exercise regularly - at least 30 minutes of moderate activity daily</li>
+                        <li>Eat a balanced diet rich in fruits, vegetables, and whole grains</li>
+                        <li>Stay hydrated - drink at least 8 glasses of water daily</li>
+                        <li>Manage stress through meditation, yoga, or relaxation techniques</li>
+                    </ul>
+                </div>
+
+                <div style="padding: 1.5rem; background: var(--gray-50); border-left: 4px solid var(--primary-red); border-radius: 8px;">
+                    <h4 style="color: var(--primary-red); margin-bottom: 0.5rem;">Regular Health Checkups</h4>
+                    <p style="color: var(--gray-600);">
+                        Schedule regular health screenings and checkups to detect potential health issues early.
+                    </p>
+                    <ul style="margin-top: 0.5rem; color: var(--gray-600); line-height: 1.8;">
+                        <li>Annual physical examination</li>
+                        <li>Blood pressure and cholesterol checks</li>
+                        <li>Diabetes screening for those at risk</li>
+                        <li>Age-appropriate cancer screenings</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">💉 Vaccination Guidelines</h3>
+            <div class="grid grid-2">
+                <div style="padding: 1.5rem; background: var(--bg-red); border-radius: 8px;">
+                    <h4 style="color: var(--dark-red); margin-bottom: 1rem;">Recommended Vaccinations</h4>
+                    <ul style="color: var(--gray-600); line-height: 2;">
+                        <li>✓ Annual Flu Vaccine</li>
+                        <li>✓ COVID-19 Vaccine & Boosters</li>
+                        <li>✓ Tetanus Booster (every 10 years)</li>
+                        <li>✓ Pneumococcal Vaccine (for seniors)</li>
+                        <li>✓ Hepatitis A & B Vaccines</li>
+                    </ul>
+                </div>
+                <div style="padding: 1.5rem; background: var(--bg-red); border-radius: 8px;">
+                    <h4 style="color: var(--dark-red); margin-bottom: 1rem;">For Children</h4>
+                    <ul style="color: var(--gray-600); line-height: 2;">
+                        <li>✓ MMR (Measles, Mumps, Rubella)</li>
+                        <li>✓ Polio Vaccine</li>
+                        <li>✓ DPT (Diphtheria, Pertussis, Tetanus)</li>
+                        <li>✓ Hepatitis B Vaccine</li>
+                        <li>✓ HPV Vaccine (for adolescents)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">🌡️ Seasonal Health Alerts</h3>
+            
+            <div class="alert alert-warning">
+                <strong>Flu Season Alert:</strong> Flu activity is currently high in your area. Get vaccinated if you haven't already, 
+                and practice good hygiene to prevent spread.
+            </div>
+
+            <div class="alert alert-info">
+                <strong>Summer Heat Advisory:</strong> Stay hydrated and avoid prolonged sun exposure during peak hours (10 AM - 4 PM). 
+                Use sunscreen with SPF 30 or higher.
+            </div>
+
+            <div class="alert alert-success">
+                <strong>Monsoon Precautions:</strong> Prevent mosquito breeding by eliminating stagnant water. Use mosquito repellents 
+                and sleep under mosquito nets to prevent dengue and malaria.
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">🏥 When to Seek Medical Help</h3>
+            <div style="background: var(--bg-red); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--primary-red);">
+                <p style="color: var(--gray-900); font-weight: 600; margin-bottom: 1rem;">
+                    Seek immediate medical attention if you experience:
+                </p>
+                <div class="grid grid-2">
+                    <ul style="color: var(--gray-600); line-height: 2;">
+                        <li>⚠️ Chest pain or pressure</li>
+                        <li>⚠️ Difficulty breathing</li>
+                        <li>⚠️ Sudden severe headache</li>
+                        <li>⚠️ High fever (above 103°F)</li>
+                    </ul>
+                    <ul style="color: var(--gray-600); line-height: 2;">
+                        <li>⚠️ Severe abdominal pain</li>
+                        <li>⚠️ Confusion or altered consciousness</li>
+                        <li>⚠️ Persistent vomiting or diarrhea</li>
+                        <li>⚠️ Severe allergic reactions</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 1rem; color: var(--primary-red); font-weight: 600;">
+                    📞 Emergency Hotline: 911 or your local emergency number
+                </p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/citizen/dashboard" class="btn btn-primary">← Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

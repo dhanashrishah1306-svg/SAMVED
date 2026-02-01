@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - SAKSHI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏥</span> SAKSHI
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/citizen/dashboard">Dashboard</a></li>
+                    <li><a href="/citizen/book-appointment">Book Appointment</a></li>
+                    <li><a href="/citizen/precautions">Precautions</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">Book an Appointment</h2>
+            
+            <form id="appointmentForm">
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Patient Name</label>
+                        <input type="text" class="form-input" name="patient_name" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Contact Number</label>
+                        <input type="tel" class="form-input" name="contact" placeholder="Enter your phone number" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" name="email" placeholder="your.email@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Age</label>
+                        <input type="number" class="form-input" name="age" placeholder="Enter your age" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Department</label>
+                    <select class="form-select" name="department" id="departmentSelect" required>
+                        <option value="">Select Department</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="neurology">Neurology</option>
+                        <option value="orthopedics">Orthopedics</option>
+                        <option value="pediatrics">Pediatrics</option>
+                        <option value="general">General Medicine</option>
+                        <option value="dermatology">Dermatology</option>
+                        <option value="ent">ENT</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Doctor</label>
+                    <select class="form-select" name="doctor" required>
+                        <option value="">Select Doctor</option>
+                        <option value="dr_sarah">Dr. Sarah Johnson - Cardiologist</option>
+                        <option value="dr_michael">Dr. Michael Chen - General Physician</option>
+                        <option value="dr_emily">Dr. Emily Davis - Pediatrician</option>
+                        <option value="dr_james">Dr. James Wilson - Orthopedic Surgeon</option>
+                        <option value="dr_lisa">Dr. Lisa Anderson - Dermatologist</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Preferred Date</label>
+                        <input type="date" class="form-input" name="appointment_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Preferred Time</label>
+                        <select class="form-select" name="appointment_time" required>
+                            <option value="">Select Time Slot</option>
+                            <option value="09:00">09:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="14:00">02:00 PM</option>
+                            <option value="15:00">03:00 PM</option>
+                            <option value="16:00">04:00 PM</option>
+                            <option value="17:00">05:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Reason for Visit</label>
+                    <textarea class="form-textarea" name="reason" placeholder="Briefly describe your symptoms or reason for consultation" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Current Medications (if any)</label>
+                    <textarea class="form-textarea" name="medications" placeholder="List any medications you are currently taking"></textarea>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary">📅 Book Appointment</button>
+                    <button type="reset" class="btn btn-secondary">🔄 Reset Form</button>
+                    <a href="/citizen/dashboard" class="btn btn-secondary">← Back to Dashboard</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Available Doctors Today</h3>
+            <div class="grid grid-3">
+                <div style="padding: 1rem; background: var(--bg-red); border-radius: 8px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">⚕️</div>
+                    <p style="font-weight: 600; color: var(--gray-900);">Dr. Sarah Johnson</p>
+                    <p style="color: var(--gray-600); font-size: 0.9rem;">Cardiologist</p>
+                    <span class="badge badge-high" style="margin-top: 0.5rem;">Available</span>
+                </div>
+
+                <div style="padding: 1rem; background: var(--bg-red); border-radius: 8px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">⚕️</div>
+                    <p style="font-weight: 600; color: var(--gray-900);">Dr. Michael Chen</p>
+                    <p style="color: var(--gray-600); font-size: 0.9rem;">General Physician</p>
+                    <span class="badge badge-high" style="margin-top: 0.5rem;">Available</span>
+                </div>
+
+                <div style="padding: 1rem; background: var(--bg-red); border-radius: 8px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">⚕️</div>
+                    <p style="font-weight: 600; color: var(--gray-900);">Dr. Emily Davis</p>
+                    <p style="color: var(--gray-600); font-size: 0.9rem;">Pediatrician</p>
+                    <span class="badge badge-pending" style="margin-top: 0.5rem;">Busy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Appointment request submitted successfully! You will receive a confirmation email shortly.');
+            window.location.href = '/citizen/dashboard';
+        });
+    </script>
+</body>
+</html>
