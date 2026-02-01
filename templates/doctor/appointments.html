@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments - SAKSHI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏥</span> SAKSHI
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/doctor/dashboard">Dashboard</a></li>
+                    <li><a href="/doctor/appointments">Appointments</a></li>
+                    <li><a href="/doctor/treat-patient">Treat Patients</a></li>
+                    <li><a href="/doctor/analytics">Analytics</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">Manage Appointments</h2>
+            
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="filterAppointments('all')">All Appointments</button>
+                <button class="btn btn-secondary" onclick="filterAppointments('pending')">Pending</button>
+                <button class="btn btn-secondary" onclick="filterAppointments('confirmed')">Confirmed</button>
+                <button class="btn btn-secondary" onclick="filterAppointments('completed')">Completed</button>
+            </div>
+
+            <div class="grid grid-3" style="margin-bottom: 2rem;">
+                <div class="stat-card">
+                    <div class="stat-value">23</div>
+                    <div class="stat-label">Pending Requests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">45</div>
+                    <div class="stat-label">Confirmed Appointments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">132</div>
+                    <div class="stat-label">Completed This Month</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Pending Appointment Requests</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Contact</th>
+                            <th>Date & Time</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    <p style="font-weight: 600;">John Doe</p>
+                                    <p style="font-size: 0.85rem; color: var(--gray-600);">Age: 45</p>
+                                </div>
+                            </td>
+                            <td>
+                                <p>+1 (555) 123-4567</p>
+                                <p style="font-size: 0.85rem; color: var(--gray-600);">john.doe@email.com</p>
+                            </td>
+                            <td>
+                                <p>Feb 5, 2024</p>
+                                <p style="font-size: 0.85rem; color: var(--gray-600);">10:00 AM</p>
+                            </td>
+                            <td>General Checkup</td>
+                            <td><span class="badge badge-pending">Pending</span></td>
+                            <td>
+                                <button class="btn btn-success" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="acceptAppointment(1)">✓ Accept</button>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-left: 0.5rem;" onclick="rejectAppointment(1)">✗ Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <p style="font-weight: 600;">Jane Smith</p>
+                                    <p style="font-size: 0.85rem; color: var(--gray-600);">Age: 32</p>
+                                </div>
+                            </td>
+                            <td>
+                                <p>+1 (555) 234-5678</p>
+                                <p style="font-size: 0.85rem; color: var(--gray-600);">jane.smith@email.com</p>
+                            </td>
+                            <td>
+                                <p>Feb 5, 2024</p>
+                                <p style="font-size: 0.85rem; color: var(--gray-600);">11:30 AM</p>
+                            </td>
+                            <td>Chest Pain</td>
+                            <td><span class="badge badge-pending">Pending</span></td>
+                            <td>
+                                <button class="btn btn-success" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="acceptAppointment(2)">✓ Accept</button>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-left: 0.5rem;" onclick="rejectAppointment(2)">✗ Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <p style="font-weight: 600;">Robert Brown</p>
+                                    <p style="font-size: 0.85rem; color: var(--gray-600);">Age: 58</p>
+                                </div>
+                            </td>
+                            <td>
+                                <p>+1 (555) 345-6789</p>
+                                <p style="font-size: 0.85rem; color: var(--gray-600);">robert.b@email.com</p>
+                            </td>
+                            <td>
+                                <p>Feb 6, 2024</p>
+                                <p style="font-size: 0.85rem; color: var(--gray-600);">2:00 PM</p>
+                            </td>
+                            <td>Blood Pressure Check</td>
+                            <td><span class="badge badge-pending">Pending</span></td>
+                            <td>
+                                <button class="btn btn-success" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="acceptAppointment(3)">✓ Accept</button>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-left: 0.5rem;" onclick="rejectAppointment(3)">✗ Reject</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Confirmed Appointments</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Contact</th>
+                            <th>Date & Time</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    <p style="font-weight: 600;">Alice Williams</p>
+                                    <p style="font-size: 0.85rem; color: var(--gray-600);">Age: 28</p>
+                                </div>
+                            </td>
+                            <td>
+                                <p>+1 (555) 456-7890</p>
+                                <p style="font-size: 0.85rem; color: var(--gray-600);">alice.w@email.com</p>
+                            </td>
+                            <td>
+                                <p>Feb 8, 2024</p>
+                                <p style="font-size: 0.85rem; color: var(--gray-600);">9:00 AM</p>
+                            </td>
+                            <td>Fever & Cough</td>
+                            <td><span class="badge badge-approved">Confirmed</span></td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="startTreatment(4)">Start Treatment</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <p style="font-weight: 600;">Mark Johnson</p>
+                                    <p style="font-size: 0.85rem; color: var(--gray-600);">Age: 52</p>
+                                </div>
+                            </td>
+                            <td>
+                                <p>+1 (555) 567-8901</p>
+                                <p style="font-size: 0.85rem; color: var(--gray-600);">mark.j@email.com</p>
+                            </td>
+                            <td>
+                                <p>Feb 8, 2024</p>
+                                <p style="font-size: 0.85rem; color: var(--gray-600);">10:30 AM</p>
+                            </td>
+                            <td>Diabetes Follow-up</td>
+                            <td><span class="badge badge-approved">Confirmed</span></td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="startTreatment(5)">Start Treatment</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/doctor/dashboard" class="btn btn-primary">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        function acceptAppointment(id) {
+            if (confirm('Are you sure you want to accept this appointment?')) {
+                alert('Appointment accepted successfully! Patient will be notified.');
+                location.reload();
+            }
+        }
+
+        function rejectAppointment(id) {
+            if (confirm('Are you sure you want to reject this appointment?')) {
+                alert('Appointment rejected. Patient will be notified to reschedule.');
+                location.reload();
+            }
+        }
+
+        function startTreatment(id) {
+            window.location.href = '/doctor/treat-patient';
+        }
+
+        function filterAppointments(filter) {
+            alert('Filtering by: ' + filter);
+        }
+    </script>
+</body>
+</html>

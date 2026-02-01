@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Analytics - SAKSHI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏥</span> SAKSHI
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/doctor/dashboard">Dashboard</a></li>
+                    <li><a href="/doctor/appointments">Appointments</a></li>
+                    <li><a href="/doctor/treat-patient">Treat Patients</a></li>
+                    <li><a href="/doctor/analytics">Analytics</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">Healthcare Data Analytics</h2>
+            <p style="color: var(--gray-600); margin-bottom: 2rem;">
+                View comprehensive healthcare statistics and trends across different regions
+            </p>
+
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                <select class="form-select" id="regionFilter" style="max-width: 200px;" onchange="updateCharts()">
+                    <option value="city">City Level</option>
+                    <option value="ward">Ward Level</option>
+                    <option value="sector">Sector Level</option>
+                </select>
+                <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh Data</button>
+                <button class="btn btn-secondary" onclick="exportData()">📥 Export Report</button>
+            </div>
+        </div>
+
+        <div class="grid grid-3">
+            <div class="stat-card">
+                <div class="stat-value">1,247</div>
+                <div class="stat-label">Total Patients (City)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">856</div>
+                <div class="stat-label">Active Cases</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">391</div>
+                <div class="stat-label">Recovered This Month</div>
+            </div>
+        </div>
+
+        <div class="grid grid-2">
+            <div class="card">
+                <h3 class="card-header">Disease Distribution by Ward</h3>
+                <canvas id="diseaseChart" style="max-height: 300px;"></canvas>
+            </div>
+
+            <div class="card">
+                <h3 class="card-header">Patient Age Distribution</h3>
+                <canvas id="ageChart" style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Monthly Patient Trends</h3>
+            <canvas id="trendChart" style="max-height: 300px;"></canvas>
+        </div>
+
+        <div class="grid grid-2">
+            <div class="card">
+                <h3 class="card-header">Top Diseases in Sector</h3>
+                <canvas id="sectorDiseaseChart" style="max-height: 300px;"></canvas>
+            </div>
+
+            <div class="card">
+                <h3 class="card-header">Vaccination Coverage</h3>
+                <canvas id="vaccinationChart" style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Region-wise Patient Statistics</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Region</th>
+                            <th>Total Patients</th>
+                            <th>Active Cases</th>
+                            <th>Recovered</th>
+                            <th>Vaccination Rate</th>
+                            <th>Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ward 1</strong></td>
+                            <td>342</td>
+                            <td>89</td>
+                            <td>253</td>
+                            <td>78%</td>
+                            <td><span class="badge badge-high">↑ 12%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ward 2</strong></td>
+                            <td>289</td>
+                            <td>67</td>
+                            <td>222</td>
+                            <td>82%</td>
+                            <td><span class="badge badge-high">↑ 8%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ward 3</strong></td>
+                            <td>401</td>
+                            <td>134</td>
+                            <td>267</td>
+                            <td>75%</td>
+                            <td><span class="badge badge-low">↓ 5%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ward 4</strong></td>
+                            <td>215</td>
+                            <td>48</td>
+                            <td>167</td>
+                            <td>85%</td>
+                            <td><span class="badge badge-high">↑ 15%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/doctor/dashboard" class="btn btn-primary">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        // Disease Distribution Chart
+        const diseaseCtx = document.getElementById('diseaseChart').getContext('2d');
+        new Chart(diseaseCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Diabetes', 'Hypertension', 'Respiratory', 'Cardiac', 'Others'],
+                datasets: [{
+                    label: 'Number of Cases',
+                    data: [245, 189, 156, 98, 125],
+                    backgroundColor: [
+                        'rgba(220, 38, 38, 0.8)',
+                        'rgba(220, 38, 38, 0.6)',
+                        'rgba(220, 38, 38, 0.5)',
+                        'rgba(220, 38, 38, 0.4)',
+                        'rgba(220, 38, 38, 0.3)'
+                    ],
+                    borderColor: 'rgb(220, 38, 38)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Age Distribution Chart
+        const ageCtx = document.getElementById('ageChart').getContext('2d');
+        new Chart(ageCtx, {
+            type: 'pie',
+            data: {
+                labels: ['0-18', '19-35', '36-50', '51-65', '65+'],
+                datasets: [{
+                    data: [15, 25, 30, 20, 10],
+                    backgroundColor: [
+                        'rgba(220, 38, 38, 0.9)',
+                        'rgba(220, 38, 38, 0.7)',
+                        'rgba(220, 38, 38, 0.5)',
+                        'rgba(220, 38, 38, 0.4)',
+                        'rgba(220, 38, 38, 0.3)'
+                    ],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Monthly Trend Chart
+        const trendCtx = document.getElementById('trendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'New Patients',
+                    data: [65, 78, 90, 81, 95, 110, 105, 115, 120, 108, 95, 85],
+                    borderColor: 'rgb(220, 38, 38)',
+                    backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Sector Disease Chart
+        const sectorCtx = document.getElementById('sectorDiseaseChart').getContext('2d');
+        new Chart(sectorCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Common Cold', 'Fever', 'Headache', 'Stomach Issues', 'Skin Problems'],
+                datasets: [{
+                    data: [30, 25, 20, 15, 10],
+                    backgroundColor: [
+                        'rgba(220, 38, 38, 0.9)',
+                        'rgba(220, 38, 38, 0.7)',
+                        'rgba(220, 38, 38, 0.5)',
+                        'rgba(220, 38, 38, 0.4)',
+                        'rgba(220, 38, 38, 0.3)'
+                    ],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Vaccination Chart
+        const vaccinationCtx = document.getElementById('vaccinationChart').getContext('2d');
+        new Chart(vaccinationCtx, {
+            type: 'bar',
+            data: {
+                labels: ['COVID-19', 'Flu', 'Hepatitis B', 'Tetanus', 'Pneumonia'],
+                datasets: [{
+                    label: 'Coverage (%)',
+                    data: [85, 72, 68, 90, 65],
+                    backgroundColor: 'rgba(220, 38, 38, 0.7)',
+                    borderColor: 'rgb(220, 38, 38)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        function updateCharts() {
+            alert('Charts updated based on selected region filter');
+        }
+
+        function refreshData() {
+            alert('Data refreshed successfully!');
+            location.reload();
+        }
+
+        function exportData() {
+            alert('Healthcare analytics report exported successfully!');
+        }
+    </script>
+</body>
+</html>

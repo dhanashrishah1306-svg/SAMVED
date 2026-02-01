@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treat Patient - SAKSHI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏥</span> SAKSHI
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/doctor/dashboard">Dashboard</a></li>
+                    <li><a href="/doctor/appointments">Appointments</a></li>
+                    <li><a href="/doctor/treat-patient">Treat Patients</a></li>
+                    <li><a href="/doctor/analytics">Analytics</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">Patient Treatment Form</h2>
+            
+            <form id="treatmentForm">
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Patient Name</label>
+                        <input type="text" class="form-input" name="patient_name" placeholder="Enter patient name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Patient ID</label>
+                        <input type="text" class="form-input" name="patient_id" placeholder="Enter patient ID" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Age</label>
+                        <input type="number" class="form-input" name="age" placeholder="Patient age" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Gender</label>
+                        <select class="form-select" name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Chief Complaint / Symptoms</label>
+                    <textarea class="form-textarea" name="symptoms" placeholder="Describe patient's main symptoms and complaints" required></textarea>
+                </div>
+
+                <div class="card" style="background: var(--bg-red); margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--dark-red); margin-bottom: 1rem; font-size: 1.1rem;">Vital Signs</h3>
+                    <div class="grid grid-2">
+                        <div class="form-group">
+                            <label class="form-label">Blood Pressure (mmHg)</label>
+                            <input type="text" class="form-input" name="blood_pressure" placeholder="e.g., 120/80">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Heart Rate (bpm)</label>
+                            <input type="number" class="form-input" name="heart_rate" placeholder="e.g., 72">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Temperature (°F)</label>
+                            <input type="number" step="0.1" class="form-input" name="temperature" placeholder="e.g., 98.6">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Oxygen Saturation (%)</label>
+                            <input type="number" class="form-input" name="oxygen" placeholder="e.g., 98">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Medical History</label>
+                    <textarea class="form-textarea" name="medical_history" placeholder="Relevant medical history, previous conditions, surgeries, etc."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Current Medications</label>
+                    <textarea class="form-textarea" name="current_medications" placeholder="List all current medications the patient is taking"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Allergies</label>
+                    <input type="text" class="form-input" name="allergies" placeholder="Any known allergies to medications or substances">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Diagnosis</label>
+                    <textarea class="form-textarea" name="diagnosis" placeholder="Enter your diagnosis based on examination and symptoms" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Treatment Plan</label>
+                    <textarea class="form-textarea" name="treatment_plan" placeholder="Detailed treatment plan including medications, procedures, lifestyle changes" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Prescribed Medications</label>
+                    <textarea class="form-textarea" name="medications" placeholder="List medications with dosage and frequency (e.g., Amoxicillin 500mg, 3 times daily for 7 days)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Lab Tests / Investigations Required</label>
+                    <textarea class="form-textarea" name="lab_tests" placeholder="List any lab tests or investigations needed"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Precautions & Instructions for Patient</label>
+                    <textarea class="form-textarea" name="precautions" placeholder="Important precautions, dietary restrictions, activity limitations, etc." required></textarea>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Follow-up Date</label>
+                        <input type="date" class="form-input" name="followup_date">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Follow-up Required</label>
+                        <select class="form-select" name="followup_required">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Additional Notes</label>
+                    <textarea class="form-textarea" name="notes" placeholder="Any additional observations or notes"></textarea>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary">💾 Save Treatment Record</button>
+                    <button type="button" class="btn btn-success" onclick="sendPrecautions()">📧 Send Precautions to Patient</button>
+                    <button type="reset" class="btn btn-secondary">🔄 Reset Form</button>
+                    <a href="/doctor/dashboard" class="btn btn-secondary">← Back to Dashboard</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Common Precautions Templates</h3>
+            <div class="grid grid-3">
+                <div style="padding: 1rem; background: var(--gray-50); border-radius: 8px; cursor: pointer;" onclick="insertTemplate('diabetes')">
+                    <h4 style="color: var(--primary-red); margin-bottom: 0.5rem;">Diabetes</h4>
+                    <p style="font-size: 0.85rem; color: var(--gray-600);">Click to insert diabetes care template</p>
+                </div>
+                <div style="padding: 1rem; background: var(--gray-50); border-radius: 8px; cursor: pointer;" onclick="insertTemplate('hypertension')">
+                    <h4 style="color: var(--primary-red); margin-bottom: 0.5rem;">Hypertension</h4>
+                    <p style="font-size: 0.85rem; color: var(--gray-600);">Click to insert BP management template</p>
+                </div>
+                <div style="padding: 1rem; background: var(--gray-50); border-radius: 8px; cursor: pointer;" onclick="insertTemplate('cold')">
+                    <h4 style="color: var(--primary-red); margin-bottom: 0.5rem;">Common Cold</h4>
+                    <p style="font-size: 0.85rem; color: var(--gray-600);">Click to insert cold care template</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('treatmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to save this treatment record?')) {
+                alert('Treatment record saved successfully!');
+                window.location.href = '/doctor/dashboard';
+            }
+        });
+
+        function sendPrecautions() {
+            alert('Precautions have been sent to the patient via email and SMS!');
+        }
+
+        function insertTemplate(type) {
+            const precautionsField = document.querySelector('[name="precautions"]');
+            let template = '';
+            
+            if (type === 'diabetes') {
+                template = '- Monitor blood sugar levels regularly\n- Follow prescribed diet plan (low sugar, low carbs)\n- Exercise for 30 minutes daily\n- Take medications as prescribed\n- Stay hydrated\n- Avoid sugary foods and drinks\n- Regular foot care and examination';
+            } else if (type === 'hypertension') {
+                template = '- Take blood pressure medication as prescribed\n- Reduce salt intake\n- Maintain healthy weight\n- Exercise regularly\n- Avoid smoking and limit alcohol\n- Manage stress\n- Monitor blood pressure daily';
+            } else if (type === 'cold') {
+                template = '- Get plenty of rest\n- Drink warm fluids (water, tea, soup)\n- Use humidifier to ease breathing\n- Gargle with salt water for sore throat\n- Avoid cold drinks and ice cream\n- Cover mouth when coughing\n- Maintain good hygiene';
+            }
+            
+            precautionsField.value = template;
+        }
+    </script>
+</body>
+</html>
