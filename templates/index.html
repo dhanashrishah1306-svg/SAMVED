@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAKSHI - Connecting Patients with Doctors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏥</span> SAKSHI
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Welcome to SAKSHI</h1>
+            <p>Connecting Patients with Healthcare Professionals Seamlessly</p>
+            <p style="font-size: 1rem; margin-top: 1rem;">Your Health, Our Priority</p>
+        </div>
+
+        <div id="features">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--gray-900);">Choose Your Portal</h2>
+            <div class="grid grid-3">
+                <div class="feature-card" onclick="window.location.href='/login/citizen'">
+                    <div class="feature-icon">👤</div>
+                    <h3>Citizen Portal</h3>
+                    <p>Book appointments with doctors and receive health precautions</p>
+                    <a href="/login/citizen" class="btn btn-primary" style="margin-top: 1.5rem;">Login as Citizen</a>
+                </div>
+
+                <div class="feature-card" onclick="window.location.href='/login/doctor'">
+                    <div class="feature-icon">⚕️</div>
+                    <h3>Doctor Portal</h3>
+                    <p>Manage appointments, treat patients, and access healthcare analytics</p>
+                    <a href="/login/doctor" class="btn btn-primary" style="margin-top: 1.5rem;">Login as Doctor</a>
+                </div>
+
+                <div class="feature-card" onclick="window.location.href='/login/admin'">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Admin Portal</h3>
+                    <p>Track bed availability, equipment, and manage medicine stock</p>
+                    <a href="/login/admin" class="btn btn-primary" style="margin-top: 1.5rem;">Login as Admin</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="about" style="margin-top: 5rem;">
+            <div class="card">
+                <h2 class="card-header">About SAKSHI
+                </h2>
+                <div class="grid grid-2">
+                    <div>
+                        <h3 style="color: var(--primary-red); margin-bottom: 1rem;">Our Mission</h3>
+                        <p style="color: var(--gray-600); line-height: 1.8;">
+                            SAKSHI bridges the gap between patients and healthcare providers through 
+                            innovative technology. We provide a comprehensive platform for seamless healthcare 
+                            management, appointment booking, and data-driven insights.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--primary-red); margin-bottom: 1rem;">Key Features</h3>
+                        <ul style="color: var(--gray-600); line-height: 2;">
+                            <li>✓ Easy appointment booking system</li>
+                            <li>✓ Real-time healthcare data visualization</li>
+                            <li>✓ Efficient hospital resource management</li>
+                            <li>✓ Secure patient data handling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background: var(--gray-900); color: var(--white); text-align: center; padding: 2rem; margin-top: 4rem;">
+        <p>&copy; 2026 SAKSHI. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.7;">Connecting Patients with Doctors</p>
+    </footer>
+</body>
+</html>
