@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Management - SAKSHI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏥</span> SAKSHI
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/admin/dashboard">Dashboard</a></li>
+                    <li><a href="/admin/beds">Bed Management</a></li>
+                    <li><a href="/admin/equipment">Equipment</a></li>
+                    <li><a href="/admin/medicine">Medicine Stock</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">Equipment Health Tracking</h2>
+            
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="showAddEquipmentModal()">➕ Add Equipment</button>
+                <button class="btn btn-secondary" onclick="scheduleMaintenanceAll()">🔧 Schedule Maintenance</button>
+                <button class="btn btn-secondary" onclick="exportEquipmentReport()">📥 Export Report</button>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="stat-card">
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Total Equipment</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">139</div>
+                    <div class="stat-label">Working</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">89%</div>
+                    <div class="stat-label">Overall Health</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>⚠️ Attention:</strong> 5 equipment items require immediate maintenance. 12 items due for routine service this week.
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Critical Care Equipment</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Equipment ID</th>
+                            <th>Equipment Name</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Health</th>
+                            <th>Last Service</th>
+                            <th>Next Service</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>VENT-001</strong></td>
+                            <td>Ventilator - Model X200</td>
+                            <td>ICU</td>
+                            <td><span class="badge badge-high">Working</span></td>
+                            <td><span class="badge badge-high">Excellent</span></td>
+                            <td>Jan 15, 2024</td>
+                            <td>Apr 15, 2024</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="viewDetails('VENT-001')">Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>VENT-002</strong></td>
+                            <td>Ventilator - Model X200</td>
+                            <td>ICU</td>
+                            <td><span class="badge badge-pending">Maintenance</span></td>
+                            <td><span class="badge badge-pending">Fair</span></td>
+                            <td>Dec 10, 2023</td>
+                            <td>Overdue</td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="scheduleMaintenance('VENT-002')">Schedule</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>VENT-003</strong></td>
+                            <td>Ventilator - Model X200</td>
+                            <td>Emergency</td>
+                            <td><span class="badge badge-high">Working</span></td>
+                            <td><span class="badge badge-high">Good</span></td>
+                            <td>Jan 20, 2024</td>
+                            <td>Apr 20, 2024</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="viewDetails('VENT-003')">Details</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Diagnostic Equipment</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Equipment ID</th>
+                            <th>Equipment Name</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Health</th>
+                            <th>Last Service</th>
+                            <th>Next Service</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>XRAY-001</strong></td>
+                            <td>X-Ray Machine - Digital</td>
+                            <td>Radiology</td>
+                            <td><span class="badge badge-high">Working</span></td>
+                            <td><span class="badge badge-high">Excellent</span></td>
+                            <td>Jan 5, 2024</td>
+                            <td>Jul 5, 2024</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="viewDetails('XRAY-001')">Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ECG-001</strong></td>
+                            <td>ECG Monitor - 12 Lead</td>
+                            <td>Cardiology</td>
+                            <td><span class="badge badge-high">Working</span></td>
+                            <td><span class="badge badge-high">Good</span></td>
+                            <td>Jan 10, 2024</td>
+                            <td>Apr 10, 2024</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="viewDetails('ECG-001')">Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ULTRA-001</strong></td>
+                            <td>Ultrasound Scanner</td>
+                            <td>Radiology</td>
+                            <td><span class="badge badge-low">Not Working</span></td>
+                            <td><span class="badge badge-low">Poor</span></td>
+                            <td>Nov 15, 2023</td>
+                            <td>Overdue</td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="reportIssue('ULTRA-001')">Report Issue</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>MRI-001</strong></td>
+                            <td>MRI Scanner - 1.5T</td>
+                            <td>Radiology</td>
+                            <td><span class="badge badge-high">Working</span></td>
+                            <td><span class="badge badge-high">Excellent</span></td>
+                            <td>Dec 20, 2023</td>
+                            <td>Jun 20, 2024</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="viewDetails('MRI-001')">Details</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Monitoring Equipment</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Equipment ID</th>
+                            <th>Equipment Name</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Health</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>BP-001</strong></td>
+                            <td>Blood Pressure Monitor</td>
+                            <td>General Ward</td>
+                            <td><span class="badge badge-high">Working</span></td>
+                            <td><span class="badge badge-high">Good</span></td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="viewDetails('BP-001')">Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>PULSE-001</strong></td>
+                            <td>Pulse Oximeter</td>
+                            <td>ICU</td>
+                            <td><span class="badge badge-high">Working</span></td>
+                            <td><span class="badge badge-high">Excellent</span></td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="viewDetails('PULSE-001')">Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>TEMP-001</strong></td>
+                            <td>Digital Thermometer</td>
+                            <td>Emergency</td>
+                            <td><span class="badge badge-pending">Calibration Due</span></td>
+                            <td><span class="badge badge-pending">Fair</span></td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="calibrateDevice('TEMP-001')">Calibrate</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Maintenance Schedule</h3>
+            <div class="grid grid-2">
+                <div style="padding: 1.5rem; background: var(--bg-red); border-radius: 8px;">
+                    <h4 style="color: var(--dark-red); margin-bottom: 1rem;">Due This Week</h4>
+                    <ul style="color: var(--gray-600); line-height: 2;">
+                        <li>VENT-002 - Ventilator Service</li>
+                        <li>ECG-003 - ECG Calibration</li>
+                        <li>XRAY-002 - X-Ray Maintenance</li>
+                        <li>BP-005 - Blood Pressure Monitor Check</li>
+                    </ul>
+                </div>
+                <div style="padding: 1.5rem; background: var(--bg-red); border-radius: 8px;">
+                    <h4 style="color: var(--dark-red); margin-bottom: 1rem;">Overdue</h4>
+                    <ul style="color: var(--gray-600); line-height: 2;">
+                        <li>ULTRA-001 - Ultrasound Repair (15 days overdue)</li>
+                        <li>VENT-002 - Ventilator Service (7 days overdue)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/admin/dashboard" class="btn btn-primary">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        function showAddEquipmentModal() {
+            alert('Add Equipment form will open here');
+        }
+
+        function scheduleMaintenance(equipmentId) {
+            if (confirm(`Schedule maintenance for ${equipmentId}?`)) {
+                alert(`Maintenance scheduled for ${equipmentId}`);
+                location.reload();
+            }
+        }
+
+        function scheduleMaintenanceAll() {
+            if (confirm('Schedule maintenance for all overdue equipment?')) {
+                alert('Maintenance scheduled for all overdue equipment');
+                location.reload();
+            }
+        }
+
+        function viewDetails(equipmentId) {
+            alert(`Viewing detailed information for ${equipmentId}`);
+        }
+
+        function reportIssue(equipmentId) {
+            const issue = prompt(`Describe the issue with ${equipmentId}:`);
+            if (issue) {
+                alert(`Issue reported for ${equipmentId}. Maintenance team has been notified.`);
+                location.reload();
+            }
+        }
+
+        function calibrateDevice(equipmentId) {
+            if (confirm(`Schedule calibration for ${equipmentId}?`)) {
+                alert(`Calibration scheduled for ${equipmentId}`);
+                location.reload();
+            }
+        }
+
+        function exportEquipmentReport() {
+            alert('Equipment health report exported successfully!');
+        }
+    </script>
+</body>
+</html>

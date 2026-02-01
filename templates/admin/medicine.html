@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Stock Management - SAKSHI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏥</span> SAKSHI
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/admin/dashboard">Dashboard</a></li>
+                    <li><a href="/admin/beds">Bed Management</a></li>
+                    <li><a href="/admin/equipment">Equipment</a></li>
+                    <li><a href="/admin/medicine">Medicine Stock</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">Medicine Stock Management</h2>
+            
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="showRestockModal()">➕ Restock Medicine</button>
+                <button class="btn btn-secondary" onclick="showAddMedicineModal()">📋 Add New Medicine</button>
+                <button class="btn btn-secondary" onclick="exportStockReport()">📥 Export Report</button>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="stat-card">
+                    <div class="stat-value">234</div>
+                    <div class="stat-label">Total Medicines</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">23</div>
+                    <div class="stat-label">Low Stock Items</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Out of Stock</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>⚠️ Critical Stock Alert:</strong> 8 medicines are out of stock and 15 medicines are critically low. Immediate restocking required.
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Critical Stock - Immediate Action Required</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Medicine Name</th>
+                            <th>Category</th>
+                            <th>Current Stock</th>
+                            <th>Min. Required</th>
+                            <th>Status</th>
+                            <th>Expiry</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #fef2f2;">
+                            <td><strong>Paracetamol 500mg</strong></td>
+                            <td>Analgesic</td>
+                            <td>150 tablets</td>
+                            <td>500 tablets</td>
+                            <td><span class="badge badge-low">Critical</span></td>
+                            <td>Dec 2024</td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="restockMedicine('Paracetamol 500mg')">Restock Now</button>
+                            </td>
+                        </tr>
+                        <tr style="background: #fef2f2;">
+                            <td><strong>Amoxicillin 250mg</strong></td>
+                            <td>Antibiotic</td>
+                            <td>0 capsules</td>
+                            <td>400 capsules</td>
+                            <td><span class="badge badge-low">Out of Stock</span></td>
+                            <td>-</td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="restockMedicine('Amoxicillin 250mg')">Restock Now</button>
+                            </td>
+                        </tr>
+                        <tr style="background: #fef2f2;">
+                            <td><strong>Aspirin 75mg</strong></td>
+                            <td>Antiplatelet</td>
+                            <td>80 tablets</td>
+                            <td>300 tablets</td>
+                            <td><span class="badge badge-low">Critical</span></td>
+                            <td>Nov 2024</td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="restockMedicine('Aspirin 75mg')">Restock Now</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Low Stock - Restock Soon</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Medicine Name</th>
+                            <th>Category</th>
+                            <th>Current Stock</th>
+                            <th>Min. Required</th>
+                            <th>Status</th>
+                            <th>Expiry</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Metformin 500mg</strong></td>
+                            <td>Antidiabetic</td>
+                            <td>350 tablets</td>
+                            <td>500 tablets</td>
+                            <td><span class="badge badge-pending">Low</span></td>
+                            <td>Jan 2025</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="restockMedicine('Metformin 500mg')">Restock</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lisinopril 10mg</strong></td>
+                            <td>Antihypertensive</td>
+                            <td>280 tablets</td>
+                            <td>400 tablets</td>
+                            <td><span class="badge badge-pending">Low</span></td>
+                            <td>Mar 2025</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="restockMedicine('Lisinopril 10mg')">Restock</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Omeprazole 20mg</strong></td>
+                            <td>Antacid</td>
+                            <td>310 capsules</td>
+                            <td>450 capsules</td>
+                            <td><span class="badge badge-pending">Low</span></td>
+                            <td>Feb 2025</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="restockMedicine('Omeprazole 20mg')">Restock</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Adequate Stock</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Medicine Name</th>
+                            <th>Category</th>
+                            <th>Current Stock</th>
+                            <th>Min. Required</th>
+                            <th>Status</th>
+                            <th>Expiry</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Insulin Glargine</strong></td>
+                            <td>Antidiabetic</td>
+                            <td>850 vials</td>
+                            <td>300 vials</td>
+                            <td><span class="badge badge-high">Adequate</span></td>
+                            <td>Sep 2024</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Azithromycin 500mg</strong></td>
+                            <td>Antibiotic</td>
+                            <td>620 tablets</td>
+                            <td>400 tablets</td>
+                            <td><span class="badge badge-high">Adequate</span></td>
+                            <td>Oct 2024</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ciprofloxacin 500mg</strong></td>
+                            <td>Antibiotic</td>
+                            <td>540 tablets</td>
+                            <td>350 tablets</td>
+                            <td><span class="badge badge-high">Adequate</span></td>
+                            <td>Dec 2024</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Atorvastatin 20mg</strong></td>
+                            <td>Cholesterol</td>
+                            <td>780 tablets</td>
+                            <td>400 tablets</td>
+                            <td><span class="badge badge-high">Adequate</span></td>
+                            <td>Aug 2024</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Medicines Expiring Soon (Within 3 Months)</h3>
+            <div class="alert alert-warning">
+                <strong>⚠️ Expiry Alert:</strong> The following medicines will expire in the next 3 months. Plan usage or replacement accordingly.
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Medicine Name</th>
+                            <th>Current Stock</th>
+                            <th>Expiry Date</th>
+                            <th>Days Until Expiry</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vitamin D3 1000IU</strong></td>
+                            <td>450 tablets</td>
+                            <td>Mar 15, 2024</td>
+                            <td>42 days</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Mark for Priority Use</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cough Syrup - Dextromethorphan</strong></td>
+                            <td>120 bottles</td>
+                            <td>Apr 1, 2024</td>
+                            <td>59 days</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Mark for Priority Use</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="restockModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 12px; max-width: 500px; width: 90%;">
+                <h3 style="color: var(--primary-red); margin-bottom: 1.5rem;">Restock Medicine</h3>
+                <form id="restockForm">
+                    <div class="form-group">
+                        <label class="form-label">Medicine Name</label>
+                        <input type="text" class="form-input" id="medicineName" name="medicine_name" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Quantity to Add</label>
+                        <input type="number" class="form-input" name="quantity" placeholder="Enter quantity" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Batch Number</label>
+                        <input type="text" class="form-input" name="batch_number" placeholder="Enter batch number" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Expiry Date</label>
+                        <input type="date" class="form-input" name="expiry_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Supplier</label>
+                        <select class="form-select" name="supplier" required>
+                            <option value="">Select Supplier</option>
+                            <option value="supplier1">MedSupply Inc.</option>
+                            <option value="supplier2">PharmaCorp</option>
+                            <option value="supplier3">HealthDistributors Ltd.</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="submit" class="btn btn-primary">Confirm Restock</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeRestockModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/admin/dashboard" class="btn btn-primary">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        function showRestockModal() {
+            document.getElementById('restockModal').style.display = 'block';
+        }
+
+        function closeRestockModal() {
+            document.getElementById('restockModal').style.display = 'none';
+        }
+
+        function restockMedicine(medicineName) {
+            document.getElementById('medicineName').value = medicineName;
+            showRestockModal();
+        }
+
+        document.getElementById('restockForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Medicine restocked successfully!');
+            closeRestockModal();
+            location.reload();
+        });
+
+        function showAddMedicineModal() {
+            alert('Add New Medicine form will open here');
+        }
+
+        function exportStockReport() {
+            alert('Medicine stock report exported successfully!');
+        }
+    </script>
+</body>
+</html>
