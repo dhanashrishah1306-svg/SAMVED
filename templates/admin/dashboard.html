@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HealthConnect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏥</span> SAKSHI
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/admin/dashboard">Dashboard</a></li>
+                    <li><a href="/admin/beds">Bed Management</a></li>
+                    <li><a href="/admin/equipment">Equipment</a></li>
+                    <li><a href="/admin/medicine">Medicine Stock</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="welcome-banner">
+            <h2>Welcome, Hospital Administrator! 🏥</h2>
+            <p>Monitor and manage hospital resources efficiently</p>
+        </div>
+
+        <div class="grid grid-3">
+            <div class="stat-card">
+                <div class="stat-value">45/100</div>
+                <div class="stat-label">Available Beds</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">89%</div>
+                <div class="stat-label">Equipment Health</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">23</div>
+                <div class="stat-label">Low Stock Medicines</div>
+            </div>
+        </div>
+
+        <div class="grid grid-2">
+            <div class="card">
+                <h3 class="card-header">Quick Actions</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <a href="/admin/beds" class="btn btn-primary">🛏️ Manage Bed Availability</a>
+                    <a href="/admin/equipment" class="btn btn-primary">🔧 Track Equipment Health</a>
+                    <a href="/admin/medicine" class="btn btn-secondary">💊 Refill Medicine Stock</a>
+                    <a href="#" class="btn btn-secondary">👥 Staff Management</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-header">Critical Alerts</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Low Medicine Stock:</strong> 23 medicines require immediate restocking
+                    </div>
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Equipment Maintenance:</strong> 5 equipment items need servicing
+                    </div>
+                    <div class="alert alert-info">
+                        <strong>ℹ️ Bed Occupancy:</strong> ICU is at 85% capacity
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Bed Occupancy Overview</h3>
+            <div class="grid grid-3">
+                <div style="padding: 1.5rem; background: var(--bg-red); border-radius: 8px; text-align: center;">
+                    <h4 style="color: var(--dark-red); margin-bottom: 1rem;">General Ward</h4>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--primary-red); margin-bottom: 0.5rem;">
+                        35/60
+                    </div>
+                    <p style="color: var(--gray-600);">58% Occupied</p>
+                    <div style="margin-top: 1rem; height: 10px; background: var(--gray-200); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 58%; height: 100%; background: var(--primary-red);"></div>
+                    </div>
+                </div>
+
+                <div style="padding: 1.5rem; background: var(--bg-red); border-radius: 8px; text-align: center;">
+                    <h4 style="color: var(--dark-red); margin-bottom: 1rem;">ICU</h4>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--primary-red); margin-bottom: 0.5rem;">
+                        17/20
+                    </div>
+                    <p style="color: var(--gray-600);">85% Occupied</p>
+                    <div style="margin-top: 1rem; height: 10px; background: var(--gray-200); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 85%; height: 100%; background: var(--primary-red);"></div>
+                    </div>
+                </div>
+
+                <div style="padding: 1.5rem; background: var(--bg-red); border-radius: 8px; text-align: center;">
+                    <h4 style="color: var(--dark-red); margin-bottom: 1rem;">Emergency</h4>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--primary-red); margin-bottom: 0.5rem;">
+                        3/20
+                    </div>
+                    <p style="color: var(--gray-600);">15% Occupied</p>
+                    <div style="margin-top: 1rem; height: 10px; background: var(--gray-200); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 15%; height: 100%; background: var(--primary-red);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Equipment Health Status</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Equipment Type</th>
+                            <th>Total Units</th>
+                            <th>Working</th>
+                            <th>Under Maintenance</th>
+                            <th>Health Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ventilators</td>
+                            <td>25</td>
+                            <td>23</td>
+                            <td>2</td>
+                            <td><span class="badge badge-high">Excellent</span></td>
+                        </tr>
+                        <tr>
+                            <td>X-Ray Machines</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td>1</td>
+                            <td><span class="badge badge-high">Good</span></td>
+                        </tr>
+                        <tr>
+                            <td>ECG Monitors</td>
+                            <td>30</td>
+                            <td>28</td>
+                            <td>2</td>
+                            <td><span class="badge badge-high">Good</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ultrasound Machines</td>
+                            <td>6</td>
+                            <td>5</td>
+                            <td>1</td>
+                            <td><span class="badge badge-pending">Fair</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Medicine Stock Alerts</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Medicine Name</th>
+                            <th>Current Stock</th>
+                            <th>Minimum Required</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Paracetamol 500mg</td>
+                            <td>150</td>
+                            <td>500</td>
+                            <td><span class="badge badge-low">Critical</span></td>
+                            <td><button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Restock</button></td>
+                        </tr>
+                        <tr>
+                            <td>Amoxicillin 250mg</td>
+                            <td>300</td>
+                            <td>400</td>
+                            <td><span class="badge badge-pending">Low</span></td>
+                            <td><button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Restock</button></td>
+                        </tr>
+                        <tr>
+                            <td>Insulin</td>
+                            <td>850</td>
+                            <td>300</td>
+                            <td><span class="badge badge-high">Adequate</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

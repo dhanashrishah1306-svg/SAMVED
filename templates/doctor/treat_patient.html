@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treat Patient - SAKSHI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .hidden { display: none !important; }
+        
+        /* Global ID Header */
+        .id-header { background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #dee2e6; }
+        
+        /* Speech Mode Styling */
+        #speech-section { text-align: center; padding: 40px 20px; }
+        .mic-container {
+            width: 100px; height: 100px; border-radius: 50%;
+            background: #ffeef0; display: flex; align-items: center;
+            justify-content: center; margin: 0 auto 20px;
+            cursor: pointer; transition: 0.3s; border: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .mic-active { background: var(--primary-red) !important; animation: pulse 1.5s infinite; }
+        .mic-active span { color: white !important; }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(220, 53, 69, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+        }
+
+        #interim-text { color: #666; font-style: italic; margin: 15px auto; max-width: 80%; min-height: 24px; }
+        .btn-toggle { background: transparent; border: 1.5px solid var(--primary-red); color: var(--primary-red); padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo"><span>🏥</span> SAKSHI</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="id-header card">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" style="font-weight: bold; color: var(--primary-red);">Cure Code ID</label>
+                <input type="text" id="global-cure-id" class="form-input" placeholder="Enter Patient Cure Code (e.g., CC-2024-001)" oninput="syncID(this.value)">
+            </div>
+        </div>
+
+        <div id="speech-section" class="card">
+            <h3>Marathi Voice Consultation</h3>
+            <p style="color: #666;">रोग्याची लक्षणे आणि निदान मराठीत सांगा.</p>
+            
+            <div id="mic-button" class="mic-container">
+                <span style="font-size: 40px; color: var(--primary-red);">🎤</span>
+            </div>
+            
+            <p id="status-text">Click mic to start</p>
+            <div id="interim-text">Transcription will appear here...</div>
+            
+            <button class="btn-toggle" onclick="toggleView()">⌨️ Skip to Manual Form</button>
+        </div>
+
+        <div id="form-section" class="card hidden">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                <h3>Treatment Record</h3>
+                <button class="btn-toggle" onclick="toggleView()">🎤 Use Voice Instead</button>
+            </div>
+            
+            <form id="treatmentForm">
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Cure Code ID (Sync)</label>
+                        <input type="text" id="form-cure-id" class="form-input" name="patient_id" readonly style="background: #f0f0f0;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Patient Name</label>
+                        <input type="text" class="form-input" name="patient_name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Diagnosis & Findings (English)</label>
+                    <textarea id="main-content" class="form-textarea" name="symptoms" style="height: 150px;" required></textarea>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-primary">💾 Save Record</button>
+                    <button type="reset" class="btn btn-secondary" onclick="location.reload()">Reset All</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const speechSection = document.getElementById('speech-section');
+        const formSection = document.getElementById('form-section');
+        const micBtn = document.getElementById('mic-button');
+        const statusText = document.getElementById('status-text');
+        const interimDisplay = document.getElementById('interim-text');
+        const mainTextarea = document.getElementById('main-content');
+        const globalIDInput = document.getElementById('global-cure-id');
+        const formIDInput = document.getElementById('form-cure-id');
+
+        let isListening = false;
+        let finalMarathiText = "";
+
+        const SpeechRecognition = window.webkitSpeechRecognition || window.Recognition;
+        const recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'mr-IN';
+
+        // Keep IDs in sync
+        function syncID(val) {
+            formIDInput.value = val;
+        }
+
+        function toggleView() {
+            speechSection.classList.toggle('hidden');
+            formSection.classList.toggle('hidden');
+            if (isListening) stopListening();
+        }
+
+        micBtn.onclick = () => {
+            if (!globalIDInput.value.trim()) {
+                alert("Please enter a Cure Code ID first.");
+                globalIDInput.focus();
+                return;
+            }
+            if (!isListening) startListening();
+            else stopListening();
+        };
+
+        function startListening() {
+            isListening = true;
+            finalMarathiText = "";
+            recognition.start();
+            micBtn.classList.add('mic-active');
+            statusText.innerText = "Listening... (बोलणे सुरू आहे)";
+        }
+
+        function stopListening() {
+            isListening = false;
+            recognition.stop();
+            micBtn.classList.remove('mic-active');
+            statusText.innerText = "Translating...";
+            processText();
+        }
+
+        recognition.onresult = (event) => {
+            let interim = "";
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                if (event.results[i].isFinal) finalMarathiText += event.results[i][0].transcript + " ";
+                else interim += event.results[i][0].transcript;
+            }
+            interimDisplay.innerText = finalMarathiText + interim;
+        };
+
+        async function processText() {
+            const rawText = finalMarathiText || interimDisplay.innerText;
+            if (rawText.length < 2) return;
+
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=mr&tl=en&dt=t&q=${encodeURI(rawText)}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const englishText = data[0].map(x => x[0]).join(' ');
+                mainTextarea.value = englishText;
+                toggleView(); 
+            } catch (err) {
+                toggleView();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SAKSHI | Smart Public Health System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- ================= SAKSHI BRAND STRIP ================= -->
+    <section class="sakshi-strip">
+        <div class="container">
+            <div class="sakshi-row">
+
+                <!-- LEFT -->
+                <div class="sakshi-left">
+                    Solapur Municipal Corporation<br>
+                    <small>Health Department</small>
+                </div>
+
+                <!-- CENTER -->
+                <div class="sakshi-center">
+                    <div class="sakshi-name">SAKSHI</div>
+                    <div class="sakshi-tagline">
+                        Swasthya Abhiyan Kalyan Seva Healthcare Initiative
+                    </div>
+                </div>
+
+                <!-- RIGHT -->
+                <div class="sakshi-right">
+                    <button onclick="toggleLanguage()" class="strip-btn">EN | मराठी</button>
+                    <button onclick="toggleContrast()" class="strip-btn">Accessibility</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+
+            <!-- Left: Navigation -->
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-icons">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="bi bi-house"></i> Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">
+                            <i class="bi bi-info-circle"></i> About
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">
+                            <i class="bi bi-telephone"></i> Contact
+                        </a>
+                    </li>
+
+                </ul>
+
+                <!-- Right: Action Buttons -->
+                <div class="d-flex gap-2">
+                    <div class="dropdown">
+        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="loginDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-box-arrow-in-right"></i> Login
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+            <li><a class="dropdown-item" href="/login/user">User Login</a></li>
+            <li><a class="dropdown-item" href="/login/admin">Admin Login</a></li>
+            <li><a class="dropdown-item" href="/login/doctor">Doctor Login</a></li>
+        </ul>
+    </div>
+
+                    <a href="#" class="btn btn-success btn-sm emergency-btn">
+                        <i class="bi bi-exclamation-triangle"></i> Emergency
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= SLIDER ================= -->
+    <div id="sakshiSlider" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+        <div class="carousel-inner">
+
+            <!-- Slide 1: Problem -->
+            <div class="carousel-item slider-item slider-problem active">
+                <div class="slider-overlay">
+                    <div class="container slider-content">
+                        <h2>Urban Public Health Challenges</h2>
+                        <p>
+                            Fragmented health data, delayed outbreak detection,
+                            and limited real-time visibility across wards.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Slide 2: Solution -->
+            <div class="carousel-item slider-item slider-solution">
+                <div class="slider-overlay">
+                    <div class="container slider-content">
+                        <h2>SAKSHI – Integrated Smart Health Platform</h2>
+                        <p>
+                            Unified health records, real-time disease surveillance,
+                            and digital citizen services.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Impact -->
+            <div class="carousel-item slider-item slider-impact">
+                <div class="slider-overlay">
+                    <div class="container slider-content">
+                        <h2>Data-Driven Decisions. Healthier Citizens.</h2>
+                        <p>
+                            Faster response, improved access,
+                            and transparent healthcare infrastructure.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" data-bs-target="#sakshiSlider" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button class="carousel-control-next" data-bs-target="#sakshiSlider" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About SAKSHI</h2>
+            <p class="section-text">
+                SAKSHI is a technology-enabled Smart Public Health Management System
+                designed to address fragmented health data, delayed disease detection,
+                inefficient infrastructure monitoring, and limited citizen engagement
+                in Solapur city.
+            </p>
+        </div>
+    </section>
+
+    <!-- ================= MODULES ================= -->
+    <section id="modules" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Core System Modules</h2>
+
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="module-card">
+                        <h5>Health Data Integration</h5>
+                        <p>Unified digital health records and ward-wise analytics.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="module-card">
+                        <h5>Disease Surveillance</h5>
+                        <p>Real-time outbreak monitoring and predictive alerts.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="module-card">
+                        <h5>Citizen Services</h5>
+                        <p>Appointments, vaccination alerts, telemedicine.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="module-card">
+                        <h5>Infrastructure Monitoring</h5>
+                        <p>Live hospital beds, equipment, and medicine tracking.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" class="section">
+        <div class="container text-center">
+            <h2 class="section-title">Contact & Help</h2>
+            <p>
+                Solapur Municipal Corporation – Health Department <br>
+                📧 support@sakshi-smc.in | ☎ 1800-XXX-XXXX
+            </p>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-1">Solapur Municipal Corporation – Health Department</p>
+            <small>Hackathon: <strong>SAMVED</strong> | Team: <strong>CareNova</strong></small>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
