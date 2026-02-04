@@ -5,9 +5,6 @@ app = Flask(__name__)
 app.secret_key = 'helloworld'
 
 @app.route('/')
-def index():
-    return render_template('index.html')
-@app.route('/')
 def home():
     return render_template('index.html')
 
@@ -65,6 +62,10 @@ def treat_patient():
 @app.route('/doctor/analytics')
 def healthcare_analytics():
     return render_template('doctor/analytics.html')
+
+@app.route('/doctor/cure_code_creation')
+def healthcare_cure_code_creation():
+    return render_template('doctor/cure_code_creation.html')
 
 
 @app.route('/admin/dashboard')

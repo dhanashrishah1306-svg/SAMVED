@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Concept Cure – Patient Registration</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+body{
+    background:#f0f4f8;
+    font-family:Inter,system-ui,sans-serif;
+}
+.form-container{
+    max-width:1000px;
+    background:#fff;
+    margin:40px auto;
+    padding:40px;
+    border-radius:16px;
+    box-shadow:0 20px 25px rgba(0,0,0,.08);
+}
+.section-title{
+    font-size:13px;
+    font-weight:700;
+    color:#2b6cb0;
+    text-transform:uppercase;
+    margin:30px 0 15px;
+    border-bottom:1px solid #e2e8f0;
+    padding-bottom:6px;
+    text-align:left;
+}
+label{font-weight:600;font-size:13px;}
+input,select{
+    height:46px;
+    background:#f8fafc;
+}
+.btn-main{
+    background:#2b6cb0;
+    color:#fff;
+    font-weight:700;
+    padding:14px;
+}
+.btn-main:hover{background:#2c5282}
+#qrBox{text-align:center}
+</style>
+</head>
+
+<body>
+<header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏥</span> SAKSHI
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/doctor/dashboard">Dashboard</a></li>
+                    <li><a href="/doctor/appointments">Appointments</a></li>
+                    <li><a href="/doctor/treat-patient">Treat Patients</a></li>
+                    <li><a href="/doctor/analytics">Analytics</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+<div class="form-container">
+<h3 class="text-center fw-bold mb-1">Cure Code Generator</h3>
+<p class="text-center text-muted mb-4">Unified patient identity</p>
+
+<form id="cureForm" class="row g-3">
+
+<div class="section-title">Location Details</div>
+
+<div class="col-md-4">
+<label>State</label>
+<select id="state" class="form-select" required></select>
+</div>
+
+<div class="col-md-4">
+<label>District</label>
+<select id="district" class="form-select" required></select>
+</div>
+
+<div class="col-md-4">
+<label>Taluka</label>
+<select id="taluka" class="form-select" required></select>
+</div>
+
+<div class="section-title">Personal Information</div>
+
+<div class="col-md-6">
+<label>Full Name</label>
+<input id="name" class="form-control" required>
+</div>
+
+<div class="col-md-6">
+<label>Mobile</label>
+<input id="mobile" class="form-control" required>
+</div>
+
+<div class="col-md-6">
+<label>Aadhaar</label>
+<input id="aadhar" maxlength="12" class="form-control" required>
+</div>
+
+<div class="col-md-6">
+<label>Blood Group</label>
+<select id="blood" class="form-select">
+<option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+<option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+</select>
+</div>
+
+<div class="section-title">Demographics</div>
+
+<div class="col-md-4">
+<label>Gender</label>
+<select id="gender" class="form-select">
+<option>Male</option>
+<option>Female</option>
+</select>
+</div>
+
+<div class="col-md-4">
+<label>Date of Birth</label>
+<input type="date" id="dob" class="form-control" required>
+</div>
+
+<div class="col-md-4">
+<label>Age</label>
+<input id="age" class="form-control" readonly>
+</div>
+
+<div class="col-12">
+<button class="btn btn-main w-100">Generate Cure Code & QR</button>
+</div>
+</form>
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" id="resultModal">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content p-4">
+<h5 class="fw-bold text-center">Cure Code Generated</h5>
+<p class="text-center fw-bold" id="cureCodeText"></p>
+<div id="qrBox"></div>
+<button onclick="window.print()" class="btn btn-outline-primary w-100 mt-3">Print</button>
+</div>
+</div>
+</div>
+<footer class="footer">
+        <div class="container">
+            <p class="mb-1">Solapur Municipal Corporation – Health Department</p>
+            <small>Hackathon: <strong>SAMVED</strong> | Team: <strong>CareNova</strong></small>
+        </div>
+    </footer>
+<script>
+/* =======================
+   STATE / DISTRICT / TALUKA DATA
+======================= */
+const data = {
+  "Maharashtra": {
+    code: "01",
+    districts: {
+      "Pune": { code: "11", taluka: {
+        "Haveli":"01","Mulshi":"02","Bhor":"03","Velhe":"04","Indapur":"05",
+        "Baramati":"06","Daund":"07","Purandar":"08","Ambegaon":"09","Junnar":"10"
+      }},
+      "Mumbai": { code: "12", taluka: {
+        "Andheri":"01","Borivali":"02","Dahisar":"03","Kurla":"04","Chembur":"05",
+        "Ghatkopar":"06","Mulund":"07","Bandra":"08","Malad":"09","Kandivali":"10"
+      }},
+      "Nashik": { code: "13", taluka: {
+        "Nashik":"01","Igatpuri":"02","Dindori":"03","Sinnar":"04","Yeola":"05",
+        "Niphad":"06","Kalwan":"07","Baglan":"08","Malegaon":"09","Chandwad":"10"
+      }},
+      "Nagpur": { code: "14", taluka: {
+        "Nagpur Urban":"01","Nagpur Rural":"02","Hingna":"03","Umred":"04","Katol":"05",
+        "Narkhed":"06","Kalmeshwar":"07","Parseoni":"08","Savner":"09","Ramtek":"10"
+      }},
+      "Solapur": { code: "15", taluka: {
+        "Solapur North":"01","Solapur South":"02","Akkalkot":"03","Barshi":"04",
+        "Pandharpur":"05","Sangola":"06","Karmala":"07","Madha":"08",
+        "Malshiras":"09","Mohol":"10"
+      }},
+      "Kolhapur": { code: "16", taluka: {
+        "Karvir":"01","Panhala":"02","Shahuwadi":"03","Kagal":"04","Hatkanangale":"05",
+        "Shirol":"06","Gaganbawada":"07","Radhanagari":"08","Ajra":"09","Chandgad":"10"
+      }},
+      "Satara": { code: "17", taluka: {
+        "Satara":"01","Wai":"02","Khandala":"03","Mahabaleshwar":"04","Patan":"05",
+        "Karad":"06","Phaltan":"07","Man":"08","Khatav":"09","Jaoli":"10"
+      }},
+      "Sangli": { code: "18", taluka: {
+        "Miraj":"01","Tasgaon":"02","Khanapur":"03","Atpadi":"04","Jat":"05",
+        "Walwa":"06","Palus":"07","Kadegaon":"08","Shirala":"09","Islampur":"10"
+      }},
+      "Ahmednagar": { code: "19", taluka: {
+        "Nagar":"01","Shrigonda":"02","Pathardi":"03","Shevgaon":"04","Rahuri":"05",
+        "Parner":"06","Akole":"07","Sangamner":"08","Nevasa":"09","Jamkhed":"10"
+      }},
+      "Aurangabad": { code: "20", taluka: {
+        "Aurangabad":"01","Paithan":"02","Gangapur":"03","Kannad":"04","Sillod":"05",
+        "Vaijapur":"06","Phulambri":"07","Khuldabad":"08","Soegaon":"09","Bhokardan":"10"
+      }}
+    }
+  },
+
+  "Karnataka": {
+    code: "02",
+    districts: {
+      "Bengaluru Urban": { code:"21", taluka:{
+        "Yelahanka":"01","Anekal":"02","KR Puram":"03","Whitefield":"04","Hebbal":"05",
+        "Yeshwanthpur":"06","Basavanagudi":"07","Jayanagar":"08","Rajajinagar":"09","Mahadevapura":"10"
+      }},
+      "Mysuru": { code:"22", taluka:{
+        "Mysuru":"01","Nanjangud":"02","Hunsur":"03","Periyapatna":"04","T Narsipur":"05",
+        "KR Nagar":"06","HD Kote":"07","Saragur":"08","Jayapura":"09","Piriyapatna":"10"
+      }},
+      "Mandya": { code:"23", taluka:{
+        "Mandya":"01","Maddur":"02","Malavalli":"03","Srirangapatna":"04","Pandavapura":"05",
+        "Nagamangala":"06","KR Pet":"07","Shrirangapattana":"08","Keragodu":"09","Bookanakere":"10"
+      }},
+      "Tumakuru": { code:"24", taluka:{
+        "Tumakuru":"01","Tiptur":"02","Gubbi":"03","Madhugiri":"04","Koratagere":"05",
+        "Kunigal":"06","Sira":"07","Pavagada":"08","Chikkanayakanahalli":"09","Huliyurdurga":"10"
+      }},
+      "Belagavi": { code:"25", taluka:{
+        "Belagavi":"01","Gokak":"02","Athani":"03","Bailhongal":"04","Chikodi":"05",
+        "Hukkeri":"06","Ramdurg":"07","Khanapur":"08","Raibag":"09","Soundatti":"10"
+      }},
+      "Hubballi": { code:"26", taluka:{
+        "Hubballi":"01","Dharwad":"02","Kalghatgi":"03","Navalgund":"04","Annigeri":"05",
+        "Kundgol":"06","Alnavar":"07","Shirur":"08","Byadgi":"09","Hirekerur":"10"
+      }},
+      "Shivamogga": { code:"27", taluka:{
+        "Shivamogga":"01","Sagara":"02","Bhadravati":"03","Hosanagara":"04","Soraba":"05",
+        "Thirthahalli":"06","Shikaripura":"07","Channagiri":"08","Nyamathi":"09","Jade":"10"
+      }},
+      "Ballari": { code:"28", taluka:{
+        "Ballari":"01","Hospet":"02","Kudligi":"03","Sandur":"04","Hagaribommanahalli":"05",
+        "Siruguppa":"06","Tekkalakote":"07","Kampli":"08","Kurugodu":"09","Toranagallu":"10"
+      }},
+      "Chitradurga": { code:"29", taluka:{
+        "Chitradurga":"01","Hiriyur":"02","Hosadurga":"03","Molakalmuru":"04","Challakere":"05",
+        "Holalkere":"06","Parashurampura":"07","Javanagondanahalli":"08","Aimangala":"09","Madakari":"10"
+      }},
+      "Udupi": { code:"30", taluka:{
+        "Udupi":"01","Kundapura":"02","Karkala":"03","Hebri":"04","Brahmavar":"05",
+        "Byndoor":"06","Kaup":"07","Vandse":"08","Shankaranarayana":"09","Belapu":"10"
+      }}
+    }
+  }
+};
+
+
+/* =======================
+   ELEMENT REFERENCES
+======================= */
+const state = document.getElementById("state");
+const district = document.getElementById("district");
+const taluka = document.getElementById("taluka");
+const dob = document.getElementById("dob");
+const age = document.getElementById("age");
+const cureForm = document.getElementById("cureForm");
+
+const nameInput = document.getElementById("name");
+const mobile = document.getElementById("mobile");
+const aadhar = document.getElementById("aadhar");
+const gender = document.getElementById("gender");
+const blood = document.getElementById("blood");
+
+const cureCodeText = document.getElementById("cureCodeText");
+const qrBox = document.getElementById("qrBox");
+const resultModal = document.getElementById("resultModal");
+
+/* =======================
+   AGE AUTO CALCULATION
+======================= */
+dob.addEventListener("change", () => {
+  const d = new Date(dob.value);
+  const t = new Date();
+  let a = t.getFullYear() - d.getFullYear();
+  if (
+    t.getMonth() < d.getMonth() ||
+    (t.getMonth() === d.getMonth() && t.getDate() < d.getDate())
+  ) a--;
+  age.value = a > 0 ? a : "";
+});
+
+/* =======================
+   STATE INIT
+======================= */
+state.innerHTML = '<option value="">Select</option>';
+Object.keys(data).forEach(s => {
+  state.innerHTML += `<option value="${s}">${s}</option>`;
+});
+
+/* =======================
+   STATE CHANGE
+======================= */
+state.addEventListener("change", () => {
+  district.innerHTML = '<option value="">Select</option>';
+  taluka.innerHTML = '<option value="">Select</option>';
+
+  if (!state.value) return;
+
+  Object.keys(data[state.value].districts).forEach(d => {
+    district.innerHTML += `<option value="${d}">${d}</option>`;
+  });
+});
+
+/* =======================
+   DISTRICT CHANGE
+======================= */
+district.addEventListener("change", () => {
+  taluka.innerHTML = '<option value="">Select</option>';
+
+  if (!district.value) return;
+
+  const talukas = data[state.value].districts[district.value].taluka;
+  Object.entries(talukas).forEach(([name, code]) => {
+    taluka.innerHTML += `<option value="${code}">${name}</option>`;
+  });
+});
+
+/* =======================
+   FORM SUBMIT
+======================= */
+cureForm.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const distCode = data[state.value].districts[district.value].code;
+  const taluCode = taluka.value;
+  const year = dob.value.slice(0, 4);
+  const gen = gender.value === "Male" ? "00" : "01";
+  const a4 = aadhar.value.slice(-4);
+
+  const cureCode = distCode + taluCode + year + gen + a4;
+
+  localStorage.setItem(cureCode, JSON.stringify({
+    name: nameInput.value,
+    mobile: mobile.value,
+    aadhar: aadhar.value,
+    gender: gender.value,
+    dob: dob.value,
+    blood: blood.value,
+    state: state.value,
+    district: district.value,
+    taluka: taluka.value
+  }));
+
+  cureCodeText.innerText = cureCode;
+  qrBox.innerHTML = "";
+
+  new QRCode(qrBox, {
+    text: location.pathname + "?cid=" + cureCode,
+    width: 180,
+    height: 180
+  });
+
+  new bootstrap.Modal(resultModal).show();
+});
+
+/* =======================
+   QR RESCAN AUTO-FILL
+======================= */
+const params = new URLSearchParams(location.search);
+if (params.has("cid")) {
+  const stored = JSON.parse(localStorage.getItem(params.get("cid")) || "null");
+
+  if (stored) {
+    nameInput.value = stored.name;
+    mobile.value = stored.mobile;
+    aadhar.value = stored.aadhar;
+    gender.value = stored.gender;
+    dob.value = stored.dob;
+    blood.value = stored.blood;
+
+    state.value = stored.state;
+    state.dispatchEvent(new Event("change"));
+
+    setTimeout(() => {
+      district.value = stored.district;
+      district.dispatchEvent(new Event("change"));
+
+      setTimeout(() => {
+        taluka.value = stored.taluka;
+      }, 200);
+    }, 200);
+  }
+}
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
